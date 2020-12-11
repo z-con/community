@@ -1,18 +1,21 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const gravatar = require("gravatar");
-const bcrypt = require("bcryptjs");
-const { check, validationResult } = require("express-validator");
-const User = require("../../models/User");
+const gravatar = require('gravatar');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const { check, validationResult } = require('express-validator');
+const User = require('../../models/User');
+
 //@route GET api/users
 //@desc Registration
 //@access Public
 
 router.post(
-  "/",
+  '/',
   [
-    check("name", "Name is required").not().isEmpty(),
-    check("email", "Please enter a valid email").isEmail(),
+    check('name', 'Name is required').not().isEmpty(),
+    check('email', 'Please enter a valid email').isEmail(),
     // check('password', 'Minimum 6 chars').isLength({ min: 6 }),
   ],
   async (req, res) => {
@@ -26,13 +29,13 @@ router.post(
     try {
       let user = await User.findOne({ email: email });
       if (user) {
-        res.status(400).json({ errors: [{ msg: "User already exists" }] });
+        res.status(400).json({ errors: [{ msg: 'User already exists' }] });
       }
 
       const avatar = gravatar.url(email, {
-        s: "200",
-        r: "pg",
-        d: "mm",
+        s: '200',
+        r: 'pg',
+        d: 'mm',
       });
 
       user = new User({
@@ -48,10 +51,24 @@ router.post(
 
       await user.save();
 
-      res.send("User registered");
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      jwt.sign(
+        payload,
+        config.get('jwtSecret'),
+        { expiresIn: 3600000 },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error: " + err.message);
+      res.status(500).send('Server error: ' + err.message);
     }
   }
 );
