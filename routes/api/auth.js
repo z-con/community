@@ -1,28 +1,32 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const auth = require('../../middleware/auth');
-const User = require('../../models/User');
+const auth = require("../../middleware/auth");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
+const { check, validationResult } = require("express-validator");
+
+const User = require("../../models/User");
 
 //@route GET api/auth
 //@desc Test Route
 //@access Public
 
-router.get('/', auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select("-password");
     res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
 
 router.post(
-  '/',
+  "/",
   [
-    check('name', 'Name is required').not().isEmpty(),
-    check('email', 'Please enter a valid email').isEmail(),
-    // check('password', 'Minimum 6 chars').isLength({ min: 6 }),
+    check("email", "Please enter a valid email").isEmail(),
+    check("password", "Password required").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -30,32 +34,23 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
       let user = await User.findOne({ email: email });
-      if (user) {
-        res.status(400).json({ errors: [{ msg: 'User already exists' }] });
+      if (!user) {
+        res
+          .status(400)
+          .json({ errors: [{ msg: "Incorrect login credentials" }] });
       }
 
-      const avatar = gravatar.url(email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm',
-      });
+      const isMatch = await bcrypt.compare(password, user.password);
 
-      user = new User({
-        name,
-        email,
-        avatar,
-        password,
-      });
-
-      const salt = await bcrypt.genSalt(10);
-
-      user.password = await bcrypt.hash(password, salt);
-
-      await user.save();
+      if (!isMatch) {
+        res
+          .status(400)
+          .json({ errors: [{ msg: "Incorrect login credentials" }] });
+      }
 
       const payload = {
         user: {
@@ -65,7 +60,7 @@ router.post(
 
       jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        config.get("jwtSecret"),
         { expiresIn: 3600000 },
         (err, token) => {
           if (err) throw err;
@@ -74,7 +69,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error: ' + err.message);
+      res.status(500).send("Server error: " + err.message);
     }
   }
 );
