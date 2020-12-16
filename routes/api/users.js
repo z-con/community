@@ -11,10 +11,17 @@ const User = require("../../models/User");
 //@desc Registration
 //@access Public
 
+router.get("/", (req, res) => {
+  return User.find()
+    .then((users) => {
+      res.json(users);
+    })
+    .catch((err) => console.log(err));
+});
+
 router.post(
   "/",
   [
-    check("name", "Name is required").not().isEmpty(),
     check("email", "Please enter a valid email").isEmail(),
     check("password", "Minimum 6 chars").isLength({ min: 6 }),
   ],
@@ -24,7 +31,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
       let user = await User.findOne({ email: email });
@@ -39,9 +46,7 @@ router.post(
       });
 
       user = new User({
-        name,
         email,
-        avatar,
         password,
       });
 
