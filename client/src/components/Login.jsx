@@ -14,9 +14,6 @@ const Login = () => {
 
     console.log(user)
 
-
-
-
     const handleLogin = () => {
         axios
         .post("http://localhost:5000/api/auth/", user)
@@ -43,10 +40,12 @@ const Login = () => {
 
     return (
         <div>
-            <input onChange={handleChange} type="text" placeholder="Enter Email" name="email" required/>
-            <input onChange={handleChange} type="text" placeholder="Enter Password" name="password" required/>
-            <button onClick={handleSignup}>Sign Up</button>
-            <button onClick={handleLogin}>Log In</button>
+            <div>
+                <input onChange={handleChange} type="text" placeholder="Enter Email" name="email" required/>
+                <input onChange={handleChange} type="text" placeholder="Enter Password" name="password" required/>
+                <button onClick={handleSignup}>Sign Up</button>
+                <button onClick={handleLogin}>Log In</button>
+            </div>
         </div>
     );
 };

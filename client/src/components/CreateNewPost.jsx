@@ -14,7 +14,7 @@ const CreateNewPost = () => {
     }
 
     const submit = () => {
-        Axios.post("http://localhost:5000/posts/new", post)
+        Axios.post("http://localhost:5000/posts", post)
         .then(res => console.log(res, "New post created"))
         .catch(err => console.log(err, "We've hit an error"))
     }
