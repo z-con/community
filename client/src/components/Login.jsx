@@ -12,17 +12,25 @@ const Login = () => {
         })
     }
 
+    const handleLogout = () => {
+        localStorage.setItem("token", "")
+        this.setState({});
+        alert("Successfully logged out")
+    }
+
     console.log(user)
 
     const handleLogin = () => {
         axios
         .post("http://localhost:5000/api/auth/", user)
         .then((response) => { 
-            localStorage.setItem("token", response.data.token)        
+            localStorage.setItem("token", response.data.token)
+            this.setState({});
             alert("You're signed in bro!")
         })
         .catch((err) => {
             console.log(err)
+            alert("Something went wrong - please check your email and password and try again")
         })
     }
 
@@ -38,16 +46,20 @@ const Login = () => {
         })
     }
 
-    return (
-        <div>
+    if (!localStorage.token) {
+        return (
             <div>
-                <input onChange={handleChange} type="text" placeholder="Enter Email" name="email" required/>
-                <input onChange={handleChange} type="text" placeholder="Enter Password" name="password" required/>
-                <button onClick={handleSignup}>Sign Up</button>
-                <button onClick={handleLogin}>Log In</button>
+                <div>
+                    <input onChange={handleChange} type="text" placeholder="Enter Email" name="email" required/>
+                    <input onChange={handleChange} type="text" placeholder="Enter Password" name="password" required/>
+                    <button onClick={handleSignup}>Sign Up</button>
+                    <button onClick={handleLogin}>Log In</button>
+                </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return <button onClick={handleLogout}>Log Out</button>
+    }
 };
 
 export default Login;

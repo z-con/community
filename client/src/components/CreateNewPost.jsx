@@ -21,7 +21,7 @@ const CreateNewPost = () => {
 
     return (
         <div>
-            <input type="text" name="body" placeholder="body" value={post.body} onChange={handleChange} />
+            <input type="text" name="body" placeholder="body" value={post.content} onChange={handleChange} />
             <button onClick={submit}>Publish</button>
         </div>
     );

@@ -7,31 +7,31 @@ var decoded = jwt_decode(token);
 console.log(decoded.user.id)
 
 
-const Users = (props) => {
+const User = (props) => {
     console.log(props)
-    let [users, setUsers] = useState([])
+    let [user, setUser] = useState([])
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/users`)
+        axios.get(`http://localhost:5000/api/users/${decoded.user.id}`)
             .then((res) => {
-                setUsers(res.data)
-                console.log(users)
+                setUser(res.data)
+                console.log(user)
             })
             .catch(err => {
                 console.log(err)
             })
     },[])
 
+    console.log(user)
+
     return (
         <div>
-            {users && users.map(eachUser => 
             <ul>
-                <li>{eachUser.name}</li> 
-                <b>{eachUser.email}</b>
+                <li>{user.name}</li> 
+                <b>{user.email}</b>
             </ul>
-            )}
         </div>
     );
 };
 
-export default Users;
+export default User;

@@ -1,10 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const { check, validationResult } = require("express-validator/check");
+const { check, validationResult } = require("express-validator");
 const auth = require("../../middleware/auth");
 const Post = require("../../models/Post");
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
+
+router.get("/", (req, res) => {
+  return Post.find()
+    .then((posts) => {
+      res.json(posts);
+    })
+    .catch((err) => console.log(err));
+});
 
 router.post(
   "/",

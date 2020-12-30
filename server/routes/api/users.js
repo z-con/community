@@ -19,6 +19,14 @@ router.get("/", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.get("/:userId", (req, res) => {
+  return User.findById(req.params.userId)
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => console.log(err));
+});
+
 router.post(
   "/",
   [
