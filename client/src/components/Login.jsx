@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import CurrentUser from "./CurrentUser"
 
 const Login = () => {
 
@@ -14,23 +15,20 @@ const Login = () => {
 
     const handleLogout = () => {
         localStorage.setItem("token", "")
-        this.setState({});
-        alert("Successfully logged out")
+        window.location.reload();
+        setUser(user => [user])
     }
-
-    console.log(user)
 
     const handleLogin = () => {
         axios
         .post("http://localhost:5000/api/auth/", user)
         .then((response) => { 
             localStorage.setItem("token", response.data.token)
-            this.setState({});
-            alert("You're signed in bro!")
+            window.location.reload();
+            setUser(user => [user])            
         })
         .catch((err) => {
             console.log(err)
-            alert("Something went wrong - please check your email and password and try again")
         })
     }
 
@@ -49,16 +47,25 @@ const Login = () => {
     if (!localStorage.token) {
         return (
             <div>
-                <div>
-                    <input onChange={handleChange} type="text" placeholder="Enter Email" name="email" required/>
-                    <input onChange={handleChange} type="text" placeholder="Enter Password" name="password" required/>
-                    <button onClick={handleSignup}>Sign Up</button>
-                    <button onClick={handleLogin}>Log In</button>
+                <div className="login">
+                <b>SOM Community</b>
+                    <div>
+                        <input onChange={handleChange} type="text" placeholder="Enter Email" name="email" required/>
+                        <input onChange={handleChange} type="text" placeholder="Enter Password" name="password" required/>
+                    	<button onClick={handleSignup}>Sign Up</button>
+                    	<button onClick={handleLogin}>Log In</button>
+                    </div>
                 </div>
             </div>
         );
     } else {
-        return <button onClick={handleLogout}>Log Out</button>
+        return(
+            <div className="logout">
+                <b>SOM Community</b>
+                < CurrentUser/>
+                <button onClick={handleLogout}>Log Out</button>
+            </div>
+        )
     }
 };
 

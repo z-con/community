@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Posts from "./Posts"
-import User from "./User"
 import Login from "./Login"
 
 export default class Home extends Component {
@@ -13,16 +12,13 @@ export default class Home extends Component {
   
   render() {
     return (
-      <div>
+      <div className="home">
         <div>
         < Login />
         </div>
         <br></br>
         <div>
         < Posts />
-        </div>
-        <div>
-          <User/>
         </div>
       </div>
     );
