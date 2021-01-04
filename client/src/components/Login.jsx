@@ -49,6 +49,7 @@ const Login = () => {
             <div>
                 <div className="login">
                 <b>SOM Community</b>
+                
                     <div>
                         <input onChange={handleChange} type="text" placeholder="Enter Email" name="email" required/>
                         <input onChange={handleChange} type="text" placeholder="Enter Password" name="password" required/>

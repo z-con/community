@@ -32,11 +32,23 @@ const Posts = (props) => {
         </div>
         <br/><br/>
         <div className="posts">
-                {posts && posts.map(eachPost => 
+                {posts && posts.slice(0).reverse().map(eachPost => 
                 <div className="post">
                     <div>{eachPost.date}</div>
                     <br/>
                     <div>{eachPost.content}</div>
+                    <br/> <br/>
+
+                    <div className="postOptions">
+                        <div>(comments)</div>
+                        <div className="votes">
+                            <div>(up) </div>
+                            <div>-</div>
+                            <div>(down) </div>
+                            <div>-</div>
+                            <div>(x) </div>
+                        </div>
+                    </div>
                 </div>
                     )}
         </div>
