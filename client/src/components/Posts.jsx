@@ -36,6 +36,7 @@ const Posts = (props) => {
                 <div className="post">
                     <div>{eachPost.date}</div>
                     <br/>
+                    
                     <div>{eachPost.content}</div>
                     <br/> <br/>
 
