@@ -11,7 +11,7 @@ const CurrentUser = (props) => {
 
     useEffect(() => {
         axios
-            .get(`http://arcane-journey-00357.herokuapp.com/api/users/${decoded.user.id}`)
+            .get(`https://arcane-journey-00357.herokuapp.com/api/users/${decoded.user.id}`)
             .then((res) => {
                 setCurrentUser(res.data)
             })

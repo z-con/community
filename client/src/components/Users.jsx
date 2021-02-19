@@ -6,7 +6,7 @@ const Users = (props) => {
     let [users, setUsers] = useState([])
 
     useEffect(() => {
-        axios.get(`http://arcane-journey-00357.herokuapp.com/api/users`)
+        axios.get(`https://arcane-journey-00357.herokuapp.com/api/users`)
             .then((res) => {
                 setUsers(res.data)
             })

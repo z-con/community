@@ -10,7 +10,7 @@ const CreateNewPost = () => {
 
     var config = {
         method: 'post',
-        url: 'http://arcane-journey-00357.herokuapp.com/api/posts/',
+        url: 'https://arcane-journey-00357.herokuapp.com/api/posts/',
         headers: { 
           'Content-Type': 'application/json', 
           'x-auth-token': localStorage.token
