@@ -27,7 +27,7 @@ const CreateNewPost = () => {
 
     const submit = () => {
         axios
-        .post("http://arcane-journey-00357.herokuapp.com/api/posts/", post, config)
+        .post("https://arcane-journey-00357.herokuapp.com/api/posts/", post, config)
         .then(res => console.log(res, "New post created"))
         .catch(err => console.log(err, "We've hit an error"))
         window.location.reload();
