@@ -4,7 +4,7 @@
   "description": "the SOM comminity app v1",
   "main": "server.js",
   "engines": {
-    "node": "14.x"
+    "node": "15.x"
   },
   "scripts": {
     "start": "node server",
