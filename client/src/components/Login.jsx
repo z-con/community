@@ -21,7 +21,7 @@ const Login = () => {
 
     const handleLogin = () => {
         axios
-        .post("http://localhost:5000/api/auth/", user)
+        .post("http://arcane-journey-00357.herokuapp.com/api/auth/", user)
         .then((response) => { 
             localStorage.setItem("token", response.data.token)
             window.location.reload();
@@ -34,7 +34,7 @@ const Login = () => {
 
     const handleSignup = () => {
         axios
-        .post("http://localhost:5000/api/users/", user)
+        .post("arcane-journey-00357.herokuapp.com/api/users/", user)
         .then((response) => { 
             alert('You signed up - welcome!')
             handleLogin(user)

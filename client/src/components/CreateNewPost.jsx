@@ -10,7 +10,7 @@ const CreateNewPost = () => {
 
     var config = {
         method: 'post',
-        url: 'http://localhost:5000/api/posts/',
+        url: 'http://arcane-journey-00357.herokuapp.com/api/posts/',
         headers: { 
           'Content-Type': 'application/json', 
           'x-auth-token': localStorage.token
@@ -27,7 +27,7 @@ const CreateNewPost = () => {
 
     const submit = () => {
         axios
-        .post("http://localhost:5000/api/posts/", post, config)
+        .post("http://arcane-journey-00357.herokuapp.com/api/posts/", post, config)
         .then(res => console.log(res, "New post created"))
         .catch(err => console.log(err, "We've hit an error"))
         window.location.reload();

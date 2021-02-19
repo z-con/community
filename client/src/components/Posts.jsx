@@ -8,7 +8,7 @@ const Posts = (props) => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:5000/api/posts`)
+            .get(`http://arcane-journey-00357.herokuapp.com/api/posts`)
             .then((res) => {
                 setPosts(res.data)
                 setPosts(posts => [...posts])
