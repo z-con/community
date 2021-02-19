@@ -1,9 +1,11 @@
 {
   "name": "community",
   "version": "1.0.0",
-  "description": "",
+  "description": "the SOM comminity app v1",
   "main": "server.js",
-  "engines": {"node": "14.15"}
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
